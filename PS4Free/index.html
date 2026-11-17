@@ -69,31 +69,29 @@
             z-index: -1;
             pointer-events: none;
             background:
-                linear-gradient(rgba(5, 10, 19, .66), rgba(5, 10, 19, .78)),
-                url("./includes/assets/images/ps4-controller-bg.svg") center center / min(94vw, 1120px) auto no-repeat;
+                radial-gradient(ellipse at center, rgba(10, 35, 75, .34), rgba(5, 10, 19, .94) 72%);
             opacity: 1;
         }
         .mainContainer { position: relative; z-index: 0; background: transparent !important; }
         #initial-screen, #exploit-main-screen { background: transparent !important; }
-        #sudany-zone-brand {
-            display: block;
-            width: min(82vw, 390px);
-            height: auto;
-            overflow: visible;
-            margin: 2px 0 -2px;
-            filter: drop-shadow(0 0 5px rgba(255, 210, 80, .85)) drop-shadow(0 2px 8px rgba(0,0,0,.95));
-        }
-        #sudany-zone-brand text {
-            fill: url(#sudanyGold);
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 27px;
-            font-weight: 900;
-            letter-spacing: 4px;
-            stroke: rgba(110, 65, 5, .7);
-            stroke-width: .65px;
-            paint-order: stroke fill;
-        }
         #pslogo { position: relative; z-index: 1; }
+        #ps-logo-container {
+            background: transparent !important;
+            padding: 0 !important;
+            border-radius: 0 !important;
+        }
+        #sudany-zone-logo {
+            display: block;
+            width: min(76vw, 360px);
+            height: auto;
+            border-radius: 50%;
+            filter: drop-shadow(0 0 18px rgba(255, 190, 55, .42));
+            transition: transform .3s ease, filter .3s ease;
+        }
+        #pslogo:hover #sudany-zone-logo {
+            transform: scale(1.035);
+            filter: drop-shadow(0 0 24px rgba(255, 205, 85, .65));
+        }
     </style>
 
 </head>
@@ -145,31 +143,12 @@
                 </button>
             </header>
 
-            <svg id="sudany-zone-brand" viewBox="0 0 420 112" role="img" aria-label="SUDANY ZONE">
-                <defs>
-                    <linearGradient id="sudanyGold" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="#fff9cf"/>
-                        <stop offset="22%" stop-color="#ffe98a"/>
-                        <stop offset="48%" stop-color="#f5c542"/>
-                        <stop offset="72%" stop-color="#d99a18"/>
-                        <stop offset="100%" stop-color="#fff0a6"/>
-                    </linearGradient>
-                    <path id="sudanyArc" d="M 38,94 Q 210,-5 382,94"/>
-                </defs>
-                <text text-anchor="middle"><textPath href="#sudanyArc" startOffset="50%">SUDANY ZONE</textPath></text>
-            </svg>
-            <!-- PS Button -->
-            <button id="pslogo">
+            <!-- SUDANY ZONE logo is also the cache / jailbreak start button -->
+            <button id="pslogo" aria-label="SUDANY ZONE - Start PS4 cache and jailbreak">
                 <div id="ps-logo-container"
-                    class="relative group cursor-pointer flex flex-col items-center justify-center p-8 rounded-full bg-white/5 hover:bg-white/10 transition-all duration-300 transform hover:scale-102">
-                    <svg id="ps-logo" class="w-32 h-32 transition-all duration-500 ease-in-out" viewBox="0 0 32 32"
-                        fill="#3B82F6" xmlns="http://www.w3.org/2000/svg">
-                        <g id="SVGRepo_iconCarrier">
-                            <path
-                                d="M0.69116 21.9548C-0.506476 22.7935 -0.284724 24.2384 2.44769 25.1419C5.18011 26.0455 8.35603 26.2323 11.1505 25.729C11.0707 25.729 11.3102 25.729 11.1505 25.729V22.8774L8.43588 23.8C7.39792 24.1355 6.35997 24.2194 5.32202 23.9677C4.5236 23.7161 4.68328 23.2129 5.64139 22.7935L11.1505 20.7806V17.6774L3.48565 20.4452C2.52754 20.7806 1.56943 21.2839 0.69116 21.9548ZM19.2146 9.37419V17.5097C22.4881 19.1871 25.0431 17.5097 25.0431 13.1484C25.0431 8.70323 23.5261 6.69032 19.1348 5.09677C16.8193 4.25806 14.4241 3.50323 12.0288 3V27.2387L17.6178 29V8.61935C17.6178 7.69677 17.6178 7.02581 18.2565 7.27742C19.1348 7.52903 19.2146 8.45161 19.2146 9.37419ZM29.5941 20.0258C27.2787 19.1871 24.8036 18.8516 22.4083 19.1032C21.0779 19.1906 19.8294 19.5869 18.5759 20.0258V23.2968L23.7656 21.2839C24.8036 20.9484 25.8415 20.8645 26.8795 21.1161C27.6779 21.3677 27.5182 21.871 26.5601 22.2903L18.5759 25.3935V28.5806L29.5941 24.3032C30.3925 23.9677 31.1111 23.5484 31.7499 22.8774C32.3088 22.0387 32.0692 20.8645 29.5941 20.0258Z">
-                            </path>
-                        </g>
-                    </svg>
+                    class="relative group cursor-pointer flex flex-col items-center justify-center transition-all duration-300 transform hover:scale-102">
+                    <img id="sudany-zone-logo" src="./includes/assets/images/sudany-zone-logo.webp"
+                        alt="SUDANY ZONE" width="420" height="420" fetchpriority="high">
                 </div>
             </button>
             <h3 class="text-white/70 text-lg mt-4" id="click-to-start-text"></h3>
