@@ -900,3 +900,27 @@ button {
 #DebugConsole:hover {
     cursor: pointer;
 }
+
+/* SUDANY ZONE: subtle local PS4 controller background */
+body {
+    background-color: #080d16 !important;
+    position: relative;
+}
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+        linear-gradient(rgba(5, 10, 19, .78), rgba(5, 10, 19, .88)),
+        url("../../assets/images/ps4-controller-bg.svg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover, min(94vw, 1120px) auto;
+    opacity: .9;
+}
+#initial-screen,
+#exploit-main-screen {
+    background-color: transparent !important;
+}
