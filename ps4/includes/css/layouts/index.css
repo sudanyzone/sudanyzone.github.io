@@ -910,7 +910,7 @@ body::before {
     content: "";
     position: fixed;
     inset: 0;
-    z-index: -1;
+    z-index: 0;
     pointer-events: none;
     background-image:
         linear-gradient(rgba(5, 10, 19, .78), rgba(5, 10, 19, .88)),
@@ -924,3 +924,5 @@ body::before {
 #exploit-main-screen {
     background-color: transparent !important;
 }
+
+.mainContainer { position: relative; z-index: 1; }
