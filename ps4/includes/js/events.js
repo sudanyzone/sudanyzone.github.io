@@ -29,31 +29,22 @@ ui.exploitRunBtn.addEventListener('click', function () {
 ui.psLogoContainer.addEventListener('click', function () {
     if (user.blockJailbreak) return;
 
-    // First PS-logo press prepares the firmware-specific offline cache.
-    var appCache = window.applicationCache;
-    if (!appCache) {
-        alert('Offline cache is not supported by this browser.');
+    var fwVersion = getPs4FwVersion();
+    if (!fwVersion) {
+        alert('Could not detect the PS4 firmware. Please reload the page while connected to the internet.');
         return;
     }
 
-    var cacheStatus = appCache.status;
-    var uncached = (typeof appCache.UNCACHED === 'number') ? appCache.UNCACHED : 0;
-    var checking = (typeof appCache.CHECKING === 'number') ? appCache.CHECKING : 2;
-    var downloading = (typeof appCache.DOWNLOADING === 'number') ? appCache.DOWNLOADING : 3;
-    var obsolete = (typeof appCache.OBSOLETE === 'number') ? appCache.OBSOLETE : 5;
-
-    if (cacheStatus === uncached || cacheStatus === obsolete) {
+    // The cache-ready flag is firmware-specific and is written only after
+    // the AppCache iframe reports cached / up-to-date / updated.
+    var cacheKey = 'szOfflineCacheReady_' + fwVersion;
+    if (!storage.getBoolean(cacheKey, false)) {
         user.blockJailbreak = true;
         window.location.href = testModeUrl('./cache.html');
         return;
     }
 
-    if (cacheStatus === checking || cacheStatus === downloading) {
-        alert('Offline cache is still being prepared. Please wait.');
-        return;
-    }
-
-    // Cache already exists: the next press launches the selected exploit.
+    // Offline cache has been prepared for this firmware.
     user.blockJailbreak = true;
     chooseHEN();
     jailbreak();
