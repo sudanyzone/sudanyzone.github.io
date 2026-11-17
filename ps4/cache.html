@@ -58,6 +58,7 @@
                 }
 
             } else if (data.type === 'CACHE_COMPLETE') {
+                if (fwVersion) storage.set('szOfflineCacheReady_' + fwVersion, true);
                 fillEl.style.width = '100%';
                 statusEl.textContent = 'Cache complete! Redirecting...';
                 setTimeout(function () {
@@ -65,6 +66,7 @@
                 }, 1000);
 
             } else if (data.type === 'CACHE_UPDATED') {
+                if (fwVersion) storage.set('szOfflineCacheReady_' + fwVersion, true);
                 fillEl.style.width = '100%';
                 statusEl.textContent = 'Updated to latest version! Redirecting...';
                 setTimeout(function () {
@@ -72,6 +74,7 @@
                 }, 1000);
 
             } else if (data.type === 'CACHE_UP_TO_DATE') {
+                if (fwVersion) storage.set('szOfflineCacheReady_' + fwVersion, true);
                 fillEl.style.width = '100%';
                 statusEl.textContent = 'Already up to date! Redirecting...';
                 setTimeout(function () {
@@ -79,6 +82,7 @@
                 }, 800);
 
             } else if (data.type === 'CACHE_ERROR') {
+                if (fwVersion) storage.remove('szOfflineCacheReady_' + fwVersion);
                 var reason = data.reason || 'Unknown error';
                 statusEl.textContent = 'Cache error: ' + reason;
                 setTimeout(function () {
