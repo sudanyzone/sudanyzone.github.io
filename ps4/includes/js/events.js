@@ -28,6 +28,32 @@ ui.exploitRunBtn.addEventListener('click', function () {
 
 ui.psLogoContainer.addEventListener('click', function () {
     if (user.blockJailbreak) return;
+
+    // First PS-logo press prepares the firmware-specific offline cache.
+    var appCache = window.applicationCache;
+    if (!appCache) {
+        alert('Offline cache is not supported by this browser.');
+        return;
+    }
+
+    var cacheStatus = appCache.status;
+    var uncached = (typeof appCache.UNCACHED === 'number') ? appCache.UNCACHED : 0;
+    var checking = (typeof appCache.CHECKING === 'number') ? appCache.CHECKING : 2;
+    var downloading = (typeof appCache.DOWNLOADING === 'number') ? appCache.DOWNLOADING : 3;
+    var obsolete = (typeof appCache.OBSOLETE === 'number') ? appCache.OBSOLETE : 5;
+
+    if (cacheStatus === uncached || cacheStatus === obsolete) {
+        user.blockJailbreak = true;
+        window.location.href = testModeUrl('./cache.html');
+        return;
+    }
+
+    if (cacheStatus === checking || cacheStatus === downloading) {
+        alert('Offline cache is still being prepared. Please wait.');
+        return;
+    }
+
+    // Cache already exists: the next press launches the selected exploit.
     user.blockJailbreak = true;
     chooseHEN();
     jailbreak();
