@@ -1,0 +1,51 @@
+name: Import WebKitty PS4 host
+on:
+  push:
+    branches:
+      - ps4-webkitty-import
+    paths:
+      - .github/workflows/import-webkitty.yml
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout site repository
+        uses: actions/checkout@v4
+        with:
+          ref: ps4-webkitty-import
+      - name: Download and install upstream host
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p ps4
+          curl -fsSL "https://codeload.github.com/ArabPixel/WebKitty/tar.gz/f393e63cf8f07f5650fe7858a1699685b48cde3c" -o /tmp/webkitty.tar.gz
+          tar -xzf /tmp/webkitty.tar.gz --strip-components=1 -C ps4
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path("ps4/index.html")
+          s = p.read_text(encoding="utf-8")
+          s = s.replace("<title>WebKitty</title>", "<title>SUDANY ZONE | PS4 Offline Host</title>", 1)
+          s = s.replace('<meta name="author" content="ArabPixel">', '<meta name="author" content="SUDANY ZONE; based on WebKitty by ArabPixel">', 1)
+          p.write_text(s, encoding="utf-8")
+          PY
+          cat > ps4/UPSTREAM.md <<'EOF'
+          # SUDANY ZONE PS4 Offline Host
+          
+          This directory contains WebKitty, imported from:
+          https://github.com/ArabPixel/WebKitty
+          
+          Upstream revision: f393e63cf8f07f5650fe7858a1699685b48cde3c
+          Copyright and original project attribution remain with the upstream authors.
+          The upstream project is licensed under GNU AGPL-3.0; see LICENSE.
+          
+          SUDANY ZONE branding changes are limited to the page title and author metadata.
+          EOF
+          git add ps4
+          if git diff --cached --quiet; then
+            echo "No files changed."
+            exit 0
+          fi
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Import WebKitty PS4 host into /ps4"
+          git push origin HEAD:ps4-webkitty-import
