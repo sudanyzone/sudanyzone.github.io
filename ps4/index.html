@@ -76,14 +76,22 @@
         .mainContainer { position: relative; z-index: 0; background: transparent !important; }
         #initial-screen, #exploit-main-screen { background: transparent !important; }
         #sudany-zone-brand {
-            color: #f4c542;
+            display: block;
+            width: min(82vw, 390px);
+            height: auto;
+            overflow: visible;
+            margin: 2px 0 -2px;
+            filter: drop-shadow(0 0 5px rgba(255, 210, 80, .85)) drop-shadow(0 2px 8px rgba(0,0,0,.95));
+        }
+        #sudany-zone-brand text {
+            fill: url(#sudanyGold);
             font-family: Arial, Helvetica, sans-serif;
-            font-size: clamp(25px, 4vw, 38px);
+            font-size: 27px;
             font-weight: 900;
             letter-spacing: 4px;
-            text-align: center;
-            margin: 12px 0 14px;
-            text-shadow: 0 0 7px rgba(244, 197, 66, .55), 0 2px 12px rgba(0,0,0,.95);
+            stroke: rgba(110, 65, 5, .7);
+            stroke-width: .65px;
+            paint-order: stroke fill;
         }
         #pslogo { position: relative; z-index: 1; }
     </style>
@@ -137,7 +145,19 @@
                 </button>
             </header>
 
-            <div id="sudany-zone-brand" aria-label="Sudany Zone">SUDANY ZONE</div>
+            <svg id="sudany-zone-brand" viewBox="0 0 420 112" role="img" aria-label="SUDANY ZONE">
+                <defs>
+                    <linearGradient id="sudanyGold" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#fff9cf"/>
+                        <stop offset="22%" stop-color="#ffe98a"/>
+                        <stop offset="48%" stop-color="#f5c542"/>
+                        <stop offset="72%" stop-color="#d99a18"/>
+                        <stop offset="100%" stop-color="#fff0a6"/>
+                    </linearGradient>
+                    <path id="sudanyArc" d="M 38,94 Q 210,-5 382,94"/>
+                </defs>
+                <text text-anchor="middle"><textPath href="#sudanyArc" startOffset="50%">SUDANY ZONE</textPath></text>
+            </svg>
             <!-- PS Button -->
             <button id="pslogo">
                 <div id="ps-logo-container"
